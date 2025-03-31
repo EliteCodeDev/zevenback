@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "certificates",
+  "info": {
+    "singularName": "certificate",
+    "pluralName": "certificates",
+    "displayName": "Certificate",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "challenge": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::challenge.challenge",
+      "inversedBy": "certificates"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "certificates"
+    },
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "fechaFinChallenge": {
+      "type": "date",
+      "required": true
+    },
+    "tipoChallenge": {
+      "type": "enumeration",
+      "enum": [
+        "fase1",
+        "fase2",
+        "fase3",
+        "retirado"
+      ],
+      "required": true
+    },
+    "monto": {
+      "type": "decimal"
+    },
+    "qrLink": {
+      "type": "text"
+    },
+    "dataUser": {
+      "type": "json"
+    },
+    "dataChallenge": {
+      "type": "json"
+    },
+    "producto": {
+      "type": "string"
+    }
+  }
+}

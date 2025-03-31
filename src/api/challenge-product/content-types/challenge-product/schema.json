@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "challenge_products",
+  "info": {
+    "singularName": "challenge-product",
+    "pluralName": "challenge-products",
+    "displayName": "ChallengeProduct",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "challenge_relations": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::challenge-relation.challenge-relation",
+      "mappedBy": "challenge_products"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "precio": {
+      "type": "decimal"
+    },
+    "WoocomerceId": {
+      "type": "integer"
+    }
+  }
+}

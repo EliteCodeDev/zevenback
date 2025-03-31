@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "challenge_steps",
+  "info": {
+    "singularName": "challenge-step",
+    "pluralName": "challenge-steps",
+    "displayName": "ChallengeStep",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "challenge_relations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::challenge-relation.challenge-relation",
+      "mappedBy": "challenge_step"
+    }
+  }
+}

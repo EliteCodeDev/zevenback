@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "broker_accounts",
+  "info": {
+    "singularName": "broker-account",
+    "pluralName": "broker-accounts",
+    "displayName": "BrokerAccount",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "login": {
+      "type": "string",
+      "pluginOptions": {}
+    },
+    "password": {
+      "type": "string",
+      "pluginOptions": {}
+    },
+    "server": {
+      "type": "string",
+      "pluginOptions": {}
+    },
+    "platform": {
+      "type": "string",
+      "pluginOptions": {}
+    },
+    "used": {
+      "type": "boolean",
+      "pluginOptions": {},
+      "default": false,
+      "required": true
+    },
+    "inversorPass": {
+      "type": "string"
+    },
+    "balance": {
+      "type": "integer"
+    },
+    "idMeta": {
+      "type": "string"
+    },
+    "challenge": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::challenge.challenge",
+      "inversedBy": "broker_account"
+    },
+    "dynamicstatus": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

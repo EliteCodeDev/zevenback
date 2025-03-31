@@ -1,0 +1,87 @@
+{
+  "kind": "collectionType",
+  "collectionName": "challenges",
+  "info": {
+    "singularName": "challenge",
+    "pluralName": "challenges",
+    "displayName": "Challenge",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "challenges"
+    },
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "phase": {
+      "type": "integer"
+    },
+    "result": {
+      "type": "enumeration",
+      "enum": [
+        "init",
+        "progress",
+        "disapproved",
+        "approved",
+        "withdrawal",
+        "retry"
+      ]
+    },
+    "broker_account": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::broker-account.broker-account",
+      "mappedBy": "challenge"
+    },
+    "challengeId": {
+      "type": "string"
+    },
+    "challenge_relation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::challenge-relation.challenge-relation",
+      "inversedBy": "challenges"
+    },
+    "isactive": {
+      "type": "boolean",
+      "default": true
+    },
+    "metadata": {
+      "type": "json"
+    },
+    "withdraw": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::withdraw.withdraw",
+      "mappedBy": "challenge"
+    },
+    "parentId": {
+      "type": "string",
+      "required": false
+    },
+    "wc_order": {
+      "type": "string"
+    },
+    "dynamic_balance": {
+      "type": "decimal",
+      "default": 0
+    },
+    "certificates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::certificate.certificate",
+      "mappedBy": "challenge"
+    }
+  }
+}

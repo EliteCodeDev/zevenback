@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "withdraws",
+  "info": {
+    "singularName": "withdraw",
+    "pluralName": "withdraws",
+    "displayName": "Withdraw",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "wallet": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "red": {
+      "type": "string"
+    },
+    "challenge": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::challenge.challenge",
+      "inversedBy": "withdraw"
+    },
+    "estado": {
+      "type": "enumeration",
+      "enum": [
+        "proceso",
+        "pagado",
+        "cancelado"
+      ]
+    }
+  }
+}

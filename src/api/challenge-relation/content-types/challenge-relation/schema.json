@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "challenge_relations",
+  "info": {
+    "singularName": "challenge-relation",
+    "pluralName": "challenge-relations",
+    "displayName": "ChallengeRelation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "challenge_products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::challenge-product.challenge-product",
+      "inversedBy": "challenge_relations"
+    },
+    "challenge_step": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::challenge-step.challenge-step",
+      "inversedBy": "challenge_relations"
+    },
+    "challenge_subcategory": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::challenge-subcategory.challenge-subcategory",
+      "inversedBy": "challenge_relations"
+    },
+    "challenge_stages": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::challenge-stage.challenge-stage",
+      "inversedBy": "challenge_relations"
+    },
+    "challenges": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::challenge.challenge",
+      "mappedBy": "challenge_relation"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rewards",
+  "info": {
+    "singularName": "reward",
+    "pluralName": "rewards",
+    "displayName": "Reward",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "procentaje": {
+      "type": "decimal"
+    },
+    "type": {
+      "type": "string"
+    }
+  }
+}

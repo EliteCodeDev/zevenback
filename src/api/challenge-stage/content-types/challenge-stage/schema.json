@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "challenge_stages",
+  "info": {
+    "singularName": "challenge-stage",
+    "pluralName": "challenge-stages",
+    "displayName": "ChallengeStage",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "challenge_relations": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::challenge-relation.challenge-relation",
+      "mappedBy": "challenge_stages"
+    },
+    "minimumTradingDays": {
+      "type": "integer"
+    },
+    "maximumDailyLoss": {
+      "type": "decimal"
+    },
+    "profitTarget": {
+      "type": "integer"
+    },
+    "leverage": {
+      "type": "string"
+    },
+    "maximumTotalLoss": {
+      "type": "integer"
+    },
+    "maximumLossPerTrade": {
+      "type": "integer"
+    },
+    "phase": {
+      "type": "integer"
+    }
+  }
+}

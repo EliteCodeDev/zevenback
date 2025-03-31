@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tickets",
+  "info": {
+    "singularName": "ticket",
+    "pluralName": "tickets",
+    "displayName": "Ticket",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "codigo": {
+      "type": "string",
+      "required": false
+    },
+    "habilitado": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "fechaExpiracionTicket": {
+      "type": "datetime",
+      "required": false
+    },
+    "porcentaje": {
+      "type": "decimal",
+      "required": false
+    },
+    "premio": {
+      "type": "string"
+    },
+    "tipo": {
+      "type": "string"
+    },
+    "fechaAsignacionPremio": {
+      "type": "datetime"
+    },
+    "fechaExpiracionPremio": {
+      "type": "datetime"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "tickets"
+    },
+    "idChallengeLose": {
+      "type": "string"
+    }
+  }
+}
