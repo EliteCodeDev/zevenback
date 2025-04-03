@@ -818,10 +818,8 @@ export interface ApiProductConfigProductConfig
       'api::product-config.product-config'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
     precio: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

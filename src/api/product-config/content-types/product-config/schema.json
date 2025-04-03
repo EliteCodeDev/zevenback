@@ -24,13 +24,6 @@
     "wooId": {
       "type": "string"
     },
-    "name": {
-      "type": "string"
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "name"
-    },
     "challenge_relation": {
       "type": "relation",
       "relation": "manyToOne",
