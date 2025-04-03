@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_configs",
+  "info": {
+    "singularName": "product-config",
+    "pluralName": "product-configs",
+    "displayName": "ProductConfig",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "challenge_product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::challenge-product.challenge-product",
+      "inversedBy": "product_config"
+    },
+    "precio": {
+      "type": "decimal"
+    },
+    "wooId": {
+      "type": "string"
+    },
+    "challenge_relation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::challenge-relation.challenge-relation",
+      "inversedBy": "product_configs"
+    }
+  }
+}

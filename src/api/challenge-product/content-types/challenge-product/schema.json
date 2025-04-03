@@ -30,6 +30,12 @@
     },
     "WoocomerceId": {
       "type": "integer"
+    },
+    "product_config": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product-config.product-config",
+      "mappedBy": "challenge_product"
     }
   }
 }
