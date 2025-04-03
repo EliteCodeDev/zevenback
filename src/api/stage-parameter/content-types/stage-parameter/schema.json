@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stage_parameters",
+  "info": {
+    "singularName": "stage-parameter",
+    "pluralName": "stage-parameters",
+    "displayName": "StageParameter",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "challenge_stage": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::challenge-stage.challenge-stage",
+      "inversedBy": "stage_parameters"
+    },
+    "challenge_relation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::challenge-relation.challenge-relation",
+      "inversedBy": "stage_parameters"
+    },
+    "minimumTradingDays": {
+      "type": "integer"
+    },
+    "maximumDailyLoss": {
+      "type": "decimal"
+    },
+    "profitTarget": {
+      "type": "decimal"
+    },
+    "maximumTotalLoss": {
+      "type": "decimal"
+    },
+    "maximumLossPerTrade": {
+      "type": "decimal"
+    }
+  }
+}

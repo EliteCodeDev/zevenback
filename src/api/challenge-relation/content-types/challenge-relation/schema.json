@@ -41,6 +41,18 @@
       "relation": "oneToMany",
       "target": "api::challenge.challenge",
       "mappedBy": "challenge_relation"
+    },
+    "product_configs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-config.product-config",
+      "mappedBy": "challenge_relation"
+    },
+    "stage_parameters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::stage-parameter.stage-parameter",
+      "mappedBy": "challenge_relation"
     }
   }
 }

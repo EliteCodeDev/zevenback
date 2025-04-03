@@ -490,6 +490,10 @@ export interface ApiChallengeProductChallengeProduct
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     precio: Schema.Attribute.Decimal;
+    product_config: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::product-config.product-config'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -540,7 +544,15 @@ export interface ApiChallengeRelationChallengeRelation
       'api::challenge-relation.challenge-relation'
     > &
       Schema.Attribute.Private;
+    product_configs: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-config.product-config'
+    >;
     publishedAt: Schema.Attribute.DateTime;
+    stage_parameters: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::stage-parameter.stage-parameter'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -567,21 +579,18 @@ export interface ApiChallengeStageChallengeStage
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    leverage: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::challenge-stage.challenge-stage'
     > &
       Schema.Attribute.Private;
-    maximumDailyLoss: Schema.Attribute.Decimal;
-    maximumLossPerTrade: Schema.Attribute.Integer;
-    maximumTotalLoss: Schema.Attribute.Integer;
-    minimumTradingDays: Schema.Attribute.Integer;
     name: Schema.Attribute.String;
-    phase: Schema.Attribute.Integer;
-    profitTarget: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
+    stage_parameters: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::stage-parameter.stage-parameter'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -779,6 +788,47 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiProductConfigProductConfig
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'product_configs';
+  info: {
+    description: '';
+    displayName: 'ProductConfig';
+    pluralName: 'product-configs';
+    singularName: 'product-config';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    challenge_product: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::challenge-product.challenge-product'
+    >;
+    challenge_relation: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::challenge-relation.challenge-relation'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-config.product-config'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    precio: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    wooId: Schema.Attribute.String;
+  };
+}
+
 export interface ApiRewardReward extends Struct.CollectionTypeSchema {
   collectionName: 'rewards';
   info: {
@@ -838,6 +888,48 @@ export interface ApiSocialSocial extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     url: Schema.Attribute.String;
+  };
+}
+
+export interface ApiStageParameterStageParameter
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'stage_parameters';
+  info: {
+    description: '';
+    displayName: 'StageParameter';
+    pluralName: 'stage-parameters';
+    singularName: 'stage-parameter';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    challenge_relation: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::challenge-relation.challenge-relation'
+    >;
+    challenge_stage: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::challenge-stage.challenge-stage'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::stage-parameter.stage-parameter'
+    > &
+      Schema.Attribute.Private;
+    maximumDailyLoss: Schema.Attribute.Decimal;
+    maximumLossPerTrade: Schema.Attribute.Decimal;
+    maximumTotalLoss: Schema.Attribute.Decimal;
+    minimumTradingDays: Schema.Attribute.Integer;
+    profitTarget: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1494,8 +1586,10 @@ declare module '@strapi/strapi' {
       'api::challenge.challenge': ApiChallengeChallenge;
       'api::notification.notification': ApiNotificationNotification;
       'api::order.order': ApiOrderOrder;
+      'api::product-config.product-config': ApiProductConfigProductConfig;
       'api::reward.reward': ApiRewardReward;
       'api::social.social': ApiSocialSocial;
+      'api::stage-parameter.stage-parameter': ApiStageParameterStageParameter;
       'api::support.support': ApiSupportSupport;
       'api::ticket.ticket': ApiTicketTicket;
       'api::withdraw.withdraw': ApiWithdrawWithdraw;

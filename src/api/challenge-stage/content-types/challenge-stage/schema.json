@@ -21,26 +21,11 @@
       "target": "api::challenge-relation.challenge-relation",
       "mappedBy": "challenge_stages"
     },
-    "minimumTradingDays": {
-      "type": "integer"
-    },
-    "maximumDailyLoss": {
-      "type": "decimal"
-    },
-    "profitTarget": {
-      "type": "integer"
-    },
-    "leverage": {
-      "type": "string"
-    },
-    "maximumTotalLoss": {
-      "type": "integer"
-    },
-    "maximumLossPerTrade": {
-      "type": "integer"
-    },
-    "phase": {
-      "type": "integer"
+    "stage_parameters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::stage-parameter.stage-parameter",
+      "mappedBy": "challenge_stage"
     }
   }
 }
