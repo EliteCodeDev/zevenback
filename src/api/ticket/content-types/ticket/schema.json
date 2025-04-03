@@ -49,6 +49,12 @@
     },
     "idChallengeLose": {
       "type": "string"
+    },
+    "reward": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::reward.reward",
+      "inversedBy": "tickets"
     }
   }
 }
