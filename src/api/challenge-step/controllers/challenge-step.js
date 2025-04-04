@@ -13,29 +13,42 @@ module.exports = createCoreController('api::challenge-step.challenge-step', ({ s
       console.log('Data recibida:', ctx.request.body);
       const { name, stages = [], subcategories = [] } = ctx.request.body;
 
-      // Array para almacenar los IDs de los stages creados
+      // Array para almacenar los IDs de los stages creados o existentes
       const stageIds = [];
+      // Array para almacenar los objetos de stage completos
+      const stageRecords = [];
 
-      // Procesamos los stages - SIEMPRE creando uno nuevo
-      for (let i = 0; i < stages.length; i++) {
-        const stage = stages[i];
-
-        // Creamos un nuevo objeto con solo el nombre del stage original
-        // y añadimos la propiedad phase basada en su posición
-        const newStage = {
-          name: stage.name,
-          phase: i + 1  // Empezamos desde 1
-        };
-
-        console.log('Creando nuevo stage:', newStage);
-
-        // Siempre creamos un nuevo stage
-        const stageRecord = await strapi
-          .service('api::challenge-stage.challenge-stage')
-          .create({ data: newStage });
-
-        console.log('Stage creado:', stageRecord);
+      // Procesamos los stages
+      for (const stage of stages) {
+        let stageRecord;
+        if (stage.documentId) {
+          // Buscamos el stage existente filtrando por documentId
+          const existingStages = await strapi
+            .service('api::challenge-stage.challenge-stage')
+            .find({
+              filters: { documentId: stage.documentId }
+            });
+          if (existingStages?.results?.length) {
+            stageRecord = existingStages.results[0];
+          } else {
+            console.log('Stage nuevo1:', stage);
+            // Si no se encuentra, se crea el stage
+            stageRecord = await strapi
+              .service('api::challenge-stage.challenge-stage')
+              .create({ data: stage });
+            console.log('Stage nuevo2:', stageRecord);
+          }
+        } else {
+          console.log('Stage nuevo:', stage);
+          // Se asume que es un stage nuevo
+          stageRecord = await strapi
+            .service('api::challenge-stage.challenge-stage')
+            .create({ data: stage });
+          console.log('Stage nuevo2:', stageRecord);
+        }
+        console.log('Stage:', stageRecord);
         stageIds.push(stageRecord.documentId);
+        stageRecords.push(stageRecord); // Guardamos el objeto stage completo
       }
 
       // Se arma el objeto para crear el challenge-step (sin stages, ya que no es una relación directa)
@@ -75,7 +88,7 @@ module.exports = createCoreController('api::challenge-step.challenge-step', ({ s
         // Se crea un registro en Challenge Relations que contenga:
         // - El id de la subcategoría
         // - El id del challenge-step
-        // - Todos los stages nuevos creados
+        // - Todos los stages enviados
         let challengeRelation = await strapi
           .service('api::challenge-relation.challenge-relation')
           .create({
@@ -86,6 +99,19 @@ module.exports = createCoreController('api::challenge-step.challenge-step', ({ s
             }
           });
         console.log('Challenge Relation:', challengeRelation);
+
+        // NUEVO: Crear registros en stage-parameter para cada stage
+        for (const stageRecord of stageRecords) {
+          await strapi
+            .service('api::stage-parameter.stage-parameter')
+            .create({
+              data: {
+                challenge_relation: challengeRelation.documentId,
+                challenge_stage: stageRecord.documentId
+              }
+            });
+          console.log(`Stage-Parameter creado para relation ${challengeRelation.documentId} y stage ${stageRecord.documentId}`);
+        }
       }
 
       ctx.send(createdStep);
@@ -117,6 +143,8 @@ module.exports = createCoreController('api::challenge-step.challenge-step', ({ s
 
       // Procesamos los stages enviados y construimos un array de stageIds (usando el id interno)
       const stageIds = [];
+      const stageRecords = []; // Array para almacenar los objetos de stage completos
+
       for (const stage of stages) {
         let stageRecord;
         if (stage.documentId) {
@@ -144,6 +172,7 @@ module.exports = createCoreController('api::challenge-step.challenge-step', ({ s
           console.log('Stage creado:', stageRecord);
         }
         stageIds.push(stageRecord.documentId);
+        stageRecords.push(stageRecord); // Guardamos el objeto stage completo
       }
       console.log('Stage IDs procesados:', stageIds);
 
@@ -198,15 +227,48 @@ module.exports = createCoreController('api::challenge-step.challenge-step', ({ s
               challenge_subcategory: subcatRecord.id
             }
           });
+
         if (existingRelation && existingRelation.results && existingRelation.results.length > 0) {
           const relationRecord = existingRelation.results[0];
           console.log('Challenge Relation existente encontrada:', relationRecord);
+
           const updatedRelation = await strapi
             .service('api::challenge-relation.challenge-relation')
             .update(relationRecord.documentId, {
               data: { challenge_stages: stageIds }
             });
           console.log('Challenge Relation actualizada:', updatedRelation);
+
+          // Eliminar los stage-parameters existentes para esta relation
+          const existingParams = await strapi
+            .service('api::stage-parameter.stage-parameter')
+            .find({
+              filters: {
+                challenge_relation: relationRecord.id
+              }
+            });
+
+          if (existingParams && existingParams.results && existingParams.results.length > 0) {
+            for (const param of existingParams.results) {
+              await strapi
+                .service('api::stage-parameter.stage-parameter')
+                .delete(param.id);
+              console.log(`Stage-Parameter eliminado: ${param.id}`);
+            }
+          }
+
+          // Crear nuevos stage-parameters para cada stage
+          for (const stageRecord of stageRecords) {
+            await strapi
+              .service('api::stage-parameter.stage-parameter')
+              .create({
+                data: {
+                  challenge_relation: relationRecord.id,
+                  challenge_stage: stageRecord.id
+                }
+              });
+            console.log(`Nuevo Stage-Parameter creado para relation ${relationRecord.id} y stage ${stageRecord.id}`);
+          }
         } else {
           console.log('Creando nueva Challenge Relation para subcategoría:', subcatRecord.id);
           const newRelation = await strapi
@@ -219,6 +281,19 @@ module.exports = createCoreController('api::challenge-step.challenge-step', ({ s
               }
             });
           console.log('Challenge Relation creada:', newRelation);
+
+          // Crear stage-parameters para cada stage en la nueva relation
+          for (const stageRecord of stageRecords) {
+            await strapi
+              .service('api::stage-parameter.stage-parameter')
+              .create({
+                data: {
+                  challenge_relation: newRelation.id,
+                  challenge_stage: stageRecord.id
+                }
+              });
+            console.log(`Stage-Parameter creado para nueva relation ${newRelation.id} y stage ${stageRecord.id}`);
+          }
         }
       }
 
@@ -239,6 +314,25 @@ module.exports = createCoreController('api::challenge-step.challenge-step', ({ s
           // Si ya no se envió la subcategoría (o no está poblada) se "deshace" la relación
           if (!relation.challenge_subcategory || !newSubcatIds.includes(relation.challenge_subcategory.id)) {
             console.log(`Deshaciendo relación con id ${relation.documentId} porque la subcategoría ya no está presente`);
+
+            // Eliminar los stage-parameters asociados a esta relation
+            const paramsToDelete = await strapi
+              .service('api::stage-parameter.stage-parameter')
+              .find({
+                filters: {
+                  challenge_relation: relation.id
+                }
+              });
+
+            if (paramsToDelete && paramsToDelete.results && paramsToDelete.results.length > 0) {
+              for (const param of paramsToDelete.results) {
+                await strapi
+                  .service('api::stage-parameter.stage-parameter')
+                  .delete(param.id);
+                console.log(`Stage-Parameter eliminado por deshacer relación: ${param.id}`);
+              }
+            }
+
             await strapi
               .service('api::challenge-relation.challenge-relation')
               .update(relation.documentId, {
