@@ -985,27 +985,25 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    cuponId: Schema.Attribute.String;
     fechaAsignacionPremio: Schema.Attribute.DateTime;
     fechaExpiracionPremio: Schema.Attribute.DateTime;
     fechaExpiracionTicket: Schema.Attribute.DateTime;
     habilitado: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    idChallengeLose: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::ticket.ticket'
     > &
       Schema.Attribute.Private;
-    porcentaje: Schema.Attribute.Decimal;
-    premio: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     reward: Schema.Attribute.Relation<'manyToOne', 'api::reward.reward'>;
-    tipo: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    usado: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     users_permissions_user: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
