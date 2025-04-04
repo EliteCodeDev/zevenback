@@ -38,6 +38,10 @@
     },
     "maximumLossPerTrade": {
       "type": "decimal"
+    },
+    "leverage": {
+      "type": "string",
+      "default": "1:100"
     }
   }
 }

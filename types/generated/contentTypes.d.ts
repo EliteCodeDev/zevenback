@@ -919,6 +919,7 @@ export interface ApiStageParameterStageParameter
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    leverage: Schema.Attribute.String & Schema.Attribute.DefaultTo<'1:100'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
