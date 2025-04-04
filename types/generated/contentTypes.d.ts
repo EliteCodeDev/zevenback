@@ -850,8 +850,8 @@ export interface ApiRewardReward extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     nombre: Schema.Attribute.String;
+    porcentaje: Schema.Attribute.Decimal;
     probabilidad: Schema.Attribute.Decimal;
-    procentaje: Schema.Attribute.Decimal;
     productos: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
     tickets: Schema.Attribute.Relation<'oneToMany', 'api::ticket.ticket'>;
