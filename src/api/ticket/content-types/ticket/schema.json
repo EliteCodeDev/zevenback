@@ -25,16 +25,6 @@
       "type": "datetime",
       "required": false
     },
-    "porcentaje": {
-      "type": "decimal",
-      "required": false
-    },
-    "premio": {
-      "type": "string"
-    },
-    "tipo": {
-      "type": "string"
-    },
     "fechaAsignacionPremio": {
       "type": "datetime"
     },
@@ -47,14 +37,19 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "tickets"
     },
-    "idChallengeLose": {
-      "type": "string"
+    "usado": {
+      "type": "boolean",
+      "default": false,
+      "required": false
     },
     "reward": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::reward.reward",
       "inversedBy": "tickets"
+    },
+    "cuponId": {
+      "type": "string"
     }
   }
 }
