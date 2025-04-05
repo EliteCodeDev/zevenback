@@ -14,9 +14,9 @@
   "attributes": {
     "challenge_product": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::challenge-product.challenge-product",
-      "inversedBy": "product_config"
+      "inversedBy": "product_configs"
     },
     "precio": {
       "type": "decimal"

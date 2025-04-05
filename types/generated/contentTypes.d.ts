@@ -490,8 +490,8 @@ export interface ApiChallengeProductChallengeProduct
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     precio: Schema.Attribute.Decimal;
-    product_config: Schema.Attribute.Relation<
-      'oneToOne',
+    product_configs: Schema.Attribute.Relation<
+      'oneToMany',
       'api::product-config.product-config'
     >;
     publishedAt: Schema.Attribute.DateTime;
@@ -802,7 +802,7 @@ export interface ApiProductConfigProductConfig
   };
   attributes: {
     challenge_product: Schema.Attribute.Relation<
-      'oneToOne',
+      'manyToOne',
       'api::challenge-product.challenge-product'
     >;
     challenge_relation: Schema.Attribute.Relation<
