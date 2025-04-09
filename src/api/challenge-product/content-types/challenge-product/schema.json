@@ -36,6 +36,13 @@
       "relation": "oneToMany",
       "target": "api::product-config.product-config",
       "mappedBy": "challenge_product"
+    },
+    "hasDiscount": {
+      "type": "boolean",
+      "default": false
+    },
+    "descuento": {
+      "type": "text"
     }
   }
 }
