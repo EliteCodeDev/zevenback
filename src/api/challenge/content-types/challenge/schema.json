@@ -82,6 +82,10 @@
       "relation": "oneToMany",
       "target": "api::certificate.certificate",
       "mappedBy": "challenge"
+    },
+    "dynamicstatus": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

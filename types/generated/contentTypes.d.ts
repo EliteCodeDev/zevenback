@@ -696,6 +696,7 @@ export interface ApiChallengeChallenge extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     dynamic_balance: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    dynamicstatus: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     endDate: Schema.Attribute.DateTime;
     isactive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
