@@ -48,10 +48,6 @@
       "relation": "oneToOne",
       "target": "api::challenge.challenge",
       "inversedBy": "broker_account"
-    },
-    "dynamicstatus": {
-      "type": "boolean",
-      "default": true
     }
   }
 }
