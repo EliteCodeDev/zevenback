@@ -382,6 +382,8 @@ export interface ApiBrokerAccountBrokerAccount
     draftAndPublish: false;
   };
   attributes: {
+    accountDeleted: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     balance: Schema.Attribute.Integer;
     challenge: Schema.Attribute.Relation<
       'oneToOne',
@@ -390,7 +392,6 @@ export interface ApiBrokerAccountBrokerAccount
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    dynamicstatus: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     idMeta: Schema.Attribute.String;
     inversorPass: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
