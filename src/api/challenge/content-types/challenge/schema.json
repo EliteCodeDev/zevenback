@@ -86,6 +86,9 @@
     "dynamicstatus": {
       "type": "boolean",
       "default": true
+    },
+    "dataAdmin": {
+      "type": "json"
     }
   }
 }
