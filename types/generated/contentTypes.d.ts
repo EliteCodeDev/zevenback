@@ -382,8 +382,6 @@ export interface ApiBrokerAccountBrokerAccount
     draftAndPublish: false;
   };
   attributes: {
-    accountDeleted: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
     balance: Schema.Attribute.Integer;
     challenge: Schema.Attribute.Relation<
       'oneToOne',
